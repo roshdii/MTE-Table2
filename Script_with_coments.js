@@ -1,37 +1,8 @@
-﻿// JavaScript source code
+// JavaScript source code
 
 
 /// Basic functions 
 window.onload = function () {
-
-
-  
-        // var cn = new ActiveXObject(“ADODB.Connection”);
-        // var strConn = “Provider=Microsoft.Jet.OLEDB.4.0;Data Source = E:\\roshdi.xlsx;Persist Security Info=False;Extended Properties=Excel 8.0;”
-        // cn.Open(strConn);
-        // var rs = new ActiveXObject(“ADODB.Recordset”);
-        // var SQL = “select * from [my_table_name$]”;
-        // rs.Open(SQL, cn);
-        // if(rs.bof)
-        // {
-        // console.log(‘No records available for this query’);
-        // }
-
-        // if(!rs.bof)
-        // {
-        // rs.MoveFirst()
-        // while(!rs.eof)
-        // {
-        // for(var i=0; i!= rs.fields.count; ++i)
-        // {
-        // console.log(rs.fields(i).value + “, “);
-        // }
-        // console.log(“<br />”);
-        // rs.MoveNext()
-        // }
-        // }
-        // rs.Close();
-        // cn.Close();
     if ((/Mobi/.test(navigator.userAgent))) {
 
         document.getElementById('Base').style.color = 'red';
@@ -52,6 +23,7 @@ window.onload = function () {
    else 
         BASE(); //the START //    
 }
+
 function BASE(){
     document.getElementById('Base').innerHTML = "";
     
@@ -61,8 +33,7 @@ function BASE(){
     document.getElementById('input').style.visibility = 'visible';
     document.getElementById('lang').style.visibility = 'visible';
 
-var intiNTerms = Math.ceil(numofuploadSubs / intiNumSubsPerTerm); 
-console.log("num of inti Terms = "+intiNTerms+" expected max = " + maxINPUTTemrs);
+    console.log("num of max Terms = " + maxINPUTTemrs);
 
     termDraw(maxINPUTTemrs); //have the default N semister 
     coreDraw();    //have the base N subjects element 
@@ -70,7 +41,8 @@ console.log("num of inti Terms = "+intiNTerms+" expected max = " + maxINPUTTemrs
     infoDesign();  //design information zone 
     
     EVENTS();
-}
+} 
+
 function EVENTS(){
  
     //1-change languge 
@@ -300,9 +272,9 @@ function LanSelect(){
 
 
 /////////3- help showing and edit ////////////////
-function helping()
-{   LanSelect();
-// inverting the current state of help 
+function helping(){   
+    LanSelect();
+    // inverting the current state of help 
     if (document.getElementById('infoHelp').style.visibility == 'visible')
      {
         document.getElementById('infoHelp').style.visibility = 'hidden';
@@ -410,7 +382,7 @@ function editGPA(){
 
 
 /////////5- Add/Remove Semsters //////////////////
-function newTermPopUp() {
+function newTermPopUp(event) {
     var mouseX, mouseY;
 
     var rect = document.getElementById('BODY').getBoundingClientRect(); //to decleare where the canvas to take pos from
@@ -472,8 +444,7 @@ function newTermPopUp() {
         }
     }
 }
-function newTerm ()
-{
+function newTerm (event){
         var mouseX, mouseY;
         
             var rect = document.getElementById('BODY').getBoundingClientRect(); //to decleare where the canvas to take pos from
@@ -483,117 +454,116 @@ function newTerm ()
             mouseY = event.clientY + scrollY;
         
    
-//a mobile
-    if ((/Mobi/.test(navigator.userAgent))) 
-    { function X (event) { 
-        if (event.targetTouches.length == 1) {
-        var touch = event.targetTouches[0];
-        mouseX = touch.pageX + scrollX;
-        mouseY = touch.pageY + scrollY;// document.getElementById('BODY').style.zoom;
-      }
-    };
-        
-    }
+        //a mobile
+            if ((/Mobi/.test(navigator.userAgent))) 
+            { function X (event) { 
+                if (event.targetTouches.length == 1) {
+                var touch = event.targetTouches[0];
+                mouseX = touch.pageX + scrollX;
+                mouseY = touch.pageY + scrollY;// document.getElementById('BODY').style.zoom;
+              }
+            };
+                
+            }
  
-   //re scalling 
-    mouseX /= document.getElementById('BODY').style.zoom;
-    mouseY /= document.getElementById('BODY').style.zoom;
+         //re scalling 
+          mouseX /= document.getElementById('BODY').style.zoom;
+          mouseY /= document.getElementById('BODY').style.zoom;
 
-    
-    
-    var iSide = 1;
-    var sidediv = 0; 
-    var d = 1; //local var for delete = 0 , add = 1 
-    var CONFIRMATION;
-   
-    if (this.id == "Base") { state = 1; } // add  
-    else { state = -1; /*console.log(i = this.id.replace("Sem", ""));*/ }
+          
+          
+          var iSide = 1;
+          var sidediv = 0; 
+          var d = 1; //local var for delete = 0 , add = 1 
+          var CONFIRMATION;
+         
+          if (this.id == "Base") { state = 1; } // add  
+          else { state = -1; /*console.log(i = this.id.replace("Sem", ""));*/ }
 
-    for (var i = 1 ; i <= NTerms; i++) {
+          for (var i = 1 ; i <= NTerms; i++) {
 
-        if (state == -1) { //delete term
-            d = 0; iSide = 0; sidediv = TermWidths;
-            
-        }
-        else if (state == 1) {//add term
-            d = 1;
-            if (i < NTerms) { iSide = 1; sidediv = 0;}
-            else { iSide = 0; sidediv = TermWidths + Hoffset *2 ; }
-        }
-       
-        //REMOVE must Localize mouse in between Semster canvas [left::left+width] ,, 
-        //ADD must localize after semster and before the next semster [currentleft+width :: nextleft]
-        if (parseInt(mouseX) >= parseInt(document.getElementById("Sem" + i).style.left) + (d) * TermWidths && parseInt(mouseX) <= parseInt(document.getElementById("Sem" + (i + iSide)).style.left) + sidediv)
-        {
-           // console.log("TERM>" + i);
+              if (state == -1) { //delete term
+                  d = 0; iSide = 0; sidediv = TermWidths;
+                  
+              }
+              else if (state == 1) {//add term
+                  d = 1;
+                  if (i < NTerms) { iSide = 1; sidediv = 0;}
+                  else { iSide = 0; sidediv = TermWidths + Hoffset *2 ; }
+              }
+             
+              //REMOVE must Localize mouse in between Semster canvas [left::left+width] ,, 
+              //ADD must localize after semster and before the next semster [currentleft+width :: nextleft]
+              if (parseInt(mouseX) >= parseInt(document.getElementById("Sem" + i).style.left) + (d) * TermWidths && parseInt(mouseX) <= parseInt(document.getElementById("Sem" + (i + iSide)).style.left) + sidediv)
+              {
+                 // console.log("TERM>" + i);
 
-           
-            if (state == -1) {
-                CONFIRMATION = "You want to delete  " + i + " Semsster !?";
-                Stat("Deleting  Semester " + i);
-                }
-            else if (state == 1) {
-                CONFIRMATION = "You want to add new  " + (i + 1) + " Semester !?";
-                Stat("Adding Semeister " + (i + 1));
-            }
+                 
+                  if (state == -1) {
+                      CONFIRMATION = "You want to delete  " + i + " Semsster !?";
+                      Stat("Deleting  Semester " + i);
+                      }
+                  else if (state == 1) {
+                      CONFIRMATION = "You want to add new  " + (i + 1) + " Semester !?";
+                      Stat("Adding Semeister " + (i + 1));
+                  }
 
-            
-            //confirm of doing this task 
-            //console.log(NTerms);
-            if (confirm(CONFIRMATION))
-            {
-                if (state == -1) {
-                    //restriction of deleting 
-                    if (i == NTerms) { alert("can not delete last semester"); return 0; }
-                    if (allTerms[i - 1].length + allTerms[i].length > maxTermSubs) { alert("can not delete semester " + i + " , has this number of courses try move course"); return 0; }
-                }
-                // console.log("TERM" + i);
-                //confusion
-                //confilict when semster delete 
-                //subject at this semster is the root of subject at the last semster 
-                if (state == -1) {
-                    for (var SubofThis = 0 ; SubofThis < allTerms[i - 1].length; SubofThis++) {
-                        //console.log("THIS  "+allTerms[i - 1][SubofThis].name);
-                        for (var SubofThat = 0 ; SubofThat < allTerms[i].length; SubofThat++) {
-                            //.log("THAT  " + allTerms[i][SubofThat].root);
-                            for (var rootofSubThat = 0 ; rootofSubThat < allTerms[i][SubofThat].root.length ; rootofSubThat++) {
-                                //console.log("root THAT  " + eval("SUB" + allTerms[i][SubofThat].root[rootofSubThat]).name);
-                                if (eval("SUB" + allTerms[i][SubofThat].root[rootofSubThat])[globalName] == allTerms[i - 1][SubofThis][globalName]) {
-                                    alert(allTerms[i][SubofThat][globalName] + " is depend on " + allTerms[i - 1][SubofThis][globalName] + "\n (-> move any of them to solve confusion <-)");
+                  
+                  //confirm of doing this task 
+                  //console.log(NTerms);
+                  if (confirm(CONFIRMATION))
+                  {
+                      if (state == -1) {
+                          //restriction of deleting 
+                          if (i == NTerms) { alert("can not delete last semester"); return 0; }
+                          if (allTerms[i - 1].length + allTerms[i].length > maxTermSubs) { alert("can not delete semester " + i + " , has this number of courses try move course"); return 0; }
+                      }
+                      // console.log("TERM" + i);
+                      //confusion
+                      //confilict when semster delete 
+                      //subject at this semster is the root of subject at the last semster 
+                      if (state == -1) {
+                          for (var SubofThis = 0 ; SubofThis < allTerms[i - 1].length; SubofThis++) {
+                              //console.log("THIS  "+allTerms[i - 1][SubofThis].name);
+                              for (var SubofThat = 0 ; SubofThat < allTerms[i].length; SubofThat++) {
+                                  //.log("THAT  " + allTerms[i][SubofThat].root);
+                                  for (var rootofSubThat = 0 ; rootofSubThat < allTerms[i][SubofThat].root.length ; rootofSubThat++) {
+                                      //console.log("root THAT  " + eval("SUB" + allTerms[i][SubofThat].root[rootofSubThat]).name);
+                                      if (eval("SUB" + allTerms[i][SubofThat].root[rootofSubThat])[globalName] == allTerms[i - 1][SubofThis][globalName]) {
+                                          alert(allTerms[i][SubofThat][globalName] + " is depend on " + allTerms[i - 1][SubofThis][globalName] + "\n (-> move any of them to solve confusion <-)");
 
-                                    return false;
-                                }
-                            }
-                        }
-                    }
-                }
+                                          return false;
+                                      }
+                                  }
+                              }
+                          }
+                      }
 
-                NTerms = NTerms + state;
-                if (NTerms < minNTerms) { NTerms = minNTerms; alert("minNumber of Terms : " + minNTerms); return false; }
-                else if (NTerms > maxNTerms) { NTerms = maxNTerms; alert("maxNumber of Terms : " + maxNTerms); return false; }
+                      NTerms = NTerms + state;
+                      if (NTerms < minNTerms) { NTerms = minNTerms; alert("minNumber of Terms : " + minNTerms); return false; }
+                      else if (NTerms > maxNTerms) { NTerms = maxNTerms; alert("maxNumber of Terms : " + maxNTerms); return false; }
 
 
-                document.getElementById('Base').innerHTML = "";
-                termDraw(NTerms); // re draw new number of terms 
-                coreDraw();  // re draw buttons 
-                termSUB(i); //shfiting subjects at term i ... depending on (state) {+1,-1} 
-                //showNames();
-                EVENTS(); // re calling events after re draw 
-                //totalGPA();
-               
-            }
-            return false; //for if confirmed or not 
-        }
-       
-    }
+                      document.getElementById('Base').innerHTML = "";
+                      termDraw(NTerms); // re draw new number of terms 
+                      coreDraw();  // re draw buttons 
+                      termSUB(i); //shfiting subjects at term i ... depending on (state) {+1,-1} 
+                      //showNames();
+                      EVENTS(); // re calling events after re draw 
+                      //totalGPA();
+                     
+                  }
+                  return false; //for if confirmed or not 
+              }
+             
+          }
 }
 //..............................................
 
 
 /////////6- information zone/////////////////////
 //this func to achive direct [URL] of information .. this is called when click on infoZone buttons 
-function goDetails() 
-{
+function goDetails() {
     //details buttons 
         var s = this.id.valueOf() ;  //the id of button [Video,Notes ,....] 
         //console.log(eval("SUB" + openedSubject)[s]);
@@ -603,6 +573,7 @@ function goDetails()
     else 
         alert( eval("SUB" + openedSubject)[globalName] + " ' " + s + ": \n there's nothing here yet !! Contact US FOR HELP !")
 }
+
 //this function to graphically assinging  values of info
 function showInfo() {
     document.getElementById('TermPopUp').style.visibility = 'hidden';
@@ -627,7 +598,7 @@ function showInfo() {
             document.getElementById('Back').style.opacity = o/160;
             o++;
             if (o == maxOPacity) clearInterval(er);
-        }, 1);
+        }, fadingspeed);
       
 
         
@@ -680,6 +651,7 @@ function showInfo() {
         this.addEventListener('click', showRoot);
     }
 }
+
 //Information Zone Desing canvas [HTML] 
 function infoDesign() {
 
@@ -724,137 +696,119 @@ function infoDesign() {
     infoCanvas.innerHTML += "<p id='score'     style='position:relative;left:" + (275) + "px;top:180px;font-size:40px;color:gold;text-align:center;'> Your Score : </p>";
     infoCanvas.innerHTML += "<p id='infoscore' style='position:relative;left:" + (275) + "px;top:170px;font-size:60px;color:gold;text-align:center;margin-top:0px;'></p>";
 }
-    //..............................................
+//..............................................
 
 
-    /////////7- Drag/edit Subjects Poses/////////////
-    // this func is doing graphic function 
-    // input the subject (button) id and the term in which 
-    function PushItems(subjectid, term) {
+/////////7- Drag/edit Subjects Poses/////////////
+// this func is doing graphic function 
+// input the subject (button) id and the term in which 
+function PushItems(subjectid, term) {
 
-        var btnid;
-        if (term > 0 && term <= NTerms) {
-            try {
-
-
-                btnid = subjectid; //came with "Sub"
-                document.getElementById(btnid).style.left = parseInt(document.getElementById("Sem" + term).style.left) + Hoffset + "px";
-                document.getElementById(btnid).style.top = allTerms[term - 1].length * SubShiftTop + "px";
+    var btnid;
+    if (term > 0 && term <= NTerms) {
+        try {
 
 
-            }
-            catch (err) { alert("Undefiend Subject Pose ! " + eval(subjectid.replace("Sub", "SUB"))[globalName]); }
+            btnid = subjectid; //came with "Sub"
+            document.getElementById(btnid).style.left = parseInt(document.getElementById("Sem" + term).style.left) + Hoffset + "px";
+            document.getElementById(btnid).style.top = allTerms[term - 1].length * SubShiftTop + "px";
+
 
         }
+        catch (err) { alert("Undefiend Subject Pose ! " + eval(subjectid.replace("Sub", "SUB"))[globalName]); }
+
     }
-    //this func [TOUCH FUNC]  .. [DEVELOPING...] 
-    function TOUCH() {
-        document.getElementById('TermPopUp').style.visibility = 'hidden';
-        if ((/Mobi/.test(navigator.userAgent))) {//a mobile
+}
 
-            THISx = this.style.left;//public var to save current pose of button 
-            THISy = this.style.top;
+//this func [TOUCH FUNC]  .. [DEVELOPING...] 
+function TOUCH() {
+    document.getElementById('TermPopUp').style.visibility = 'hidden';
+    if ((/Mobi/.test(navigator.userAgent))) {//a mobile
 
-            var scrollX = Math.max(document.body.scrollLeft, document.documentElement.scrollLeft);
-            var scrollY = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-            var offX = touch.pageX - parseInt(this.style.left);
-            var lastX = 0, delX = 0;
+        THISx = this.style.left;//public var to save current pose of button 
+        THISy = this.style.top;
 
-            this.addEventListener('touchmove',
-                function (event) {
-                    var whichArt = event.target;
-                    event.preventDefault();
-                    if (event.targetTouches.length == 1) {
-                        var touch = event.targetTouches[0];
-                        // Place element where the finger is
-                        // console.log(touch);
-
-
-                        this.style.left = (offX + delX) + 'px';
-                        //  this.style.top =  (touch.pageY + 180 )+ 'px';
-                        // console.log("off= " +offX);
-                        //  console.log("del= " + delX);
-                        delX = touch.pageX - lastX;
-                        lastX = touch.pageX;
-
-                    }
-
-
-                });
-        }
-    }
-    //this func is to drag button (THIS) to any where semster 
-    function DragX() {
-        //var xName = eval(this.id.replace("Sub", "SUB")).name;
-        // Stat(xName + " is Dragging ");
-
-        document.getElementById('TermPopUp').style.visibility = 'hidden';
-
-        var mouseX, mouseY;
-
-        var rect = document.getElementById('BODY').getBoundingClientRect(); //to decleare where the canvas to take pos from
-        var scrollX = Math.max(document.body.scrollLeft, document.documentElement.scrollLeft); //to take the scroll done by body or document 
-        mouseX = event.clientX + scrollX;
+        var scrollX = Math.max(document.body.scrollLeft, document.documentElement.scrollLeft);
         var scrollY = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
-        mouseY = event.clientY + scrollY;
+        var offX = touch.pageX - parseInt(this.style.left);
+        var lastX = 0, delX = 0;
+
+        this.addEventListener('touchmove',
+            function (event) {
+                var whichArt = event.target;
+                event.preventDefault();
+                if (event.targetTouches.length == 1) {
+                    var touch = event.targetTouches[0];
+                    // Place element where the finger is
+                    // console.log(touch);
 
 
-        if ((/Mobi/.test(navigator.userAgent))) // to use with Mobile phone [Developing...] 
-        {
-            mouseX = parseInt(this.style.left);
-            mouseY = parseInt(this.style.top);
-            // console.log("scrX= " + scrollX);
-            //console.log("init X= " + mouseX);
-        }
-        else {
-            //  THISx = parseInt(this.style.left) + Widths / 2;
-            //  THISy = parseInt(this.style.top) + Heights / 2;
+                    this.style.left = (offX + delX) + 'px';
+                    //  this.style.top =  (touch.pageY + 180 )+ 'px';
+                    // console.log("off= " +offX);
+                    //  console.log("del= " + delX);
+                    delX = touch.pageX - lastX;
+                    lastX = touch.pageX;
 
-        }
-        // the poseition re-scall 
-        mouseX /= document.getElementById('BODY').style.zoom;
-        mouseY /= document.getElementById('BODY').style.zoom;
+                }
 
-        // console.log("X= "+mouseX );
-        for (var i = 1 ; i <= NTerms; i++) {
-            //   console.log( parseInt(document.getElementById("Sem" + i).style.left) - 30)
-            //every term has [left_edge = left-some_offset , right_edg = left+width+some_offset] 
-            if (mouseX >= parseInt(document.getElementById("Sem" + i).style.left) - Hoffset * 3 && mouseX <= parseInt(document.getElementById("Sem" + i).style.left) + TermWidths + Hoffset * 3) {
-                //    console.log(i);
-                if (!(allTerms[i - 1].indexOf(eval(this.id.replace("Sub", "SUB"))) != -1)) {//term has not this subject 
-                    if (allTerms[i - 1].length < maxTermSubs) {//term has n number of subject 
-                        //restrict push forward :: subject won't over the subjects which it is a root for 
-                        //test for what if this subject is root for aone ,,, then prevent to over its positon 
-                        //restrict forward
-                        for (var s = 1 ; s <= maxNSub; s++) {
-                            var xRoots = eval("SUB" + s).root;
-                            for (var o = 0 ; o < xRoots.length ; o++) {
-                                if (xRoots[o] == this.id.replace("Sub", "")) {
-                                    //if subj is root for any subj
-                                    if (parseInt(mouseX) >= parseInt(document.getElementById("Sub" + s).style.left) - Hoffset * 3) {
-                                        //if subj get obver the root left side 
-                                        alert("You may take " + eval(this.id.replace("Sub", "SUB"))[globalName] + " before " + eval("SUB" + s)[globalName]);
-                                        //back postion to last Touched one // 
-                                        if ((/Mobi/.test(navigator.userAgent))) {
-                                            this.style.left = THISx;
-                                            this.style.top = THISy;
-                                            THISx = 0; THISy = 0;
 
-                                        } return 0;
-                                    }
+            });
+    }
+}
 
-                                }
+//this func is to drag button (THIS) to any where semster 
+function DragX(event) {
+    //var xName = eval(this.id.replace("Sub", "SUB")).name;
+    // Stat(xName + " is Dragging ");
 
-                            }
-                        }
-                        //restrict pull back :: the roots of subject won't over the subjec
-                        //restrict backward
-                        var fRoots = eval(this.id.replace("Sub", "SUB")).root;
-                        //console.log(fRoots);
-                        if (fRoots[0] != null) {
-                            for (var s = 0 ; s < fRoots.length; s++) {
-                                if (parseInt(mouseX) <= parseInt(document.getElementById("Sub" + fRoots[s]).style.left) + parseInt(document.getElementById("Sub" + fRoots[s]).style.width) + Hoffset * 3) {
-                                    alert("You may take " + eval(this.id.replace("Sub", "SUB"))[globalName] + " after " + eval("SUB" + fRoots[s])[globalName]);
+    document.getElementById('TermPopUp').style.visibility = 'hidden';
+
+    var mouseX, mouseY;
+
+    var rect = document.getElementById('BODY').getBoundingClientRect(); //to decleare where the canvas to take pos from
+    var scrollX = Math.max(document.body.scrollLeft, document.documentElement.scrollLeft); //to take the scroll done by body or document 
+    mouseX = event.clientX + scrollX;
+    var scrollY = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+    mouseY = event.clientY + scrollY;
+
+
+    if ((/Mobi/.test(navigator.userAgent))) // to use with Mobile phone [Developing...] 
+    {
+        mouseX = parseInt(this.style.left);
+        mouseY = parseInt(this.style.top);
+        // console.log("scrX= " + scrollX);
+        //console.log("init X= " + mouseX);
+    }
+    else {
+        //  THISx = parseInt(this.style.left) + Widths / 2;
+        //  THISy = parseInt(this.style.top) + Heights / 2;
+
+    }
+    // the poseition re-scall 
+    mouseX /= document.getElementById('BODY').style.zoom;
+    mouseY /= document.getElementById('BODY').style.zoom;
+
+    // console.log("X= "+mouseX );
+    for (var i = 1 ; i <= NTerms; i++) {
+        //   console.log( parseInt(document.getElementById("Sem" + i).style.left) - 30)
+        //every term has [left_edge = left-some_offset , right_edg = left+width+some_offset] 
+        if (mouseX >= parseInt(document.getElementById("Sem" + i).style.left) - Hoffset * 3 && mouseX <= parseInt(document.getElementById("Sem" + i).style.left) + TermWidths + Hoffset * 3) {
+            //    console.log(i);
+            if (!(allTerms[i - 1].indexOf(eval(this.id.replace("Sub", "SUB"))) != -1)) {//term has not this subject 
+                if (allTerms[i - 1].length < maxTermSubs) {//term has n number of subject 
+                    //restrict push forward :: subject won't over the subjects which it is a root for 
+                    //test for what if this subject is root for aone ,,, then prevent to over its positon 
+                    //restrict forward
+                    for (var s = 1 ; s <= maxNSub; s++) {
+                        var xRoots = eval("SUB" + s).root;
+                        for (var o = 0 ; o < xRoots.length ; o++) {
+                            if (xRoots[o] == this.id.replace("Sub", "")) {
+                                //if subj is root for any subj
+                                if (parseInt(mouseX) >= parseInt(document.getElementById("Sub" + s).style.left) - Hoffset * 3) {
+                                    //if subj get obver the root left side 
+                                    alert("You may take " + eval(this.id.replace("Sub", "SUB"))[globalName] + " before " + eval("SUB" + s)[globalName]);
+                                    //back postion to last Touched one // 
                                     if ((/Mobi/.test(navigator.userAgent))) {
                                         this.style.left = THISx;
                                         this.style.top = THISy;
@@ -862,33 +816,43 @@ function infoDesign() {
 
                                     } return 0;
                                 }
+
+                            }
+
+                        }
+                    }
+                    //restrict pull back :: the roots of subject won't over the subjec
+                    //restrict backward
+                    var fRoots = eval(this.id.replace("Sub", "SUB")).root;
+
+                    if (fRoots[0] != null && fRoots[0] != [0]) // to be sure have a root to be restricted
+                    {                        
+                        for (var s = 0 ; s < fRoots.length; s++) {
+                            if (parseInt(mouseX) <= parseInt(document.getElementById("Sub" + fRoots[s]).style.left) + parseInt(document.getElementById("Sub" + fRoots[s]).style.width) + Hoffset * 3) {
+                                alert("You may take " + eval(this.id.replace("Sub", "SUB"))[globalName] + " after " + eval("SUB" + fRoots[s])[globalName]);
+                                if ((/Mobi/.test(navigator.userAgent))) {
+                                    this.style.left = THISx;
+                                    this.style.top = THISy;
+                                    THISx = 0; THISy = 0;
+
+                                } return 0;
                             }
                         }
-                        eval(this.id.replace("Sub", "SUB")).sem = i; //change properties of subject object 
-                        allTerms[i - 1].push(eval(this.id.replace("Sub", "SUB"))); //push new object to public array  
-
-                        //PushItems(this.id, i); //psuh id and term to GUI
-
-                        termSUB(0); //redefine subs in terms Array
-
-                        Stat(eval(this.id.replace("Sub", "SUB"))[globalName] + "Added In Term " + i);
-                        totalGPA(); //re calc GPA 
-                        LanSelect();  //
-
                     }
-                    else {
-                        alert("term " + i + " has " + allTerms[i - 1].length + " courses \n It is reached maximum courses Term: " + maxTermSubs);
-                        if ((/Mobi/.test(navigator.userAgent))) {
-                            this.style.left = THISx;
-                            this.style.top = THISy;
-                            THISx = 0; THISy = 0;
+                    eval(this.id.replace("Sub", "SUB")).sem = i; //change properties of subject object 
+                    allTerms[i - 1].push(eval(this.id.replace("Sub", "SUB"))); //push new object to public array  
 
-                        } return 0;
-                    }
+                    //PushItems(this.id, i); //psuh id and term to GUI
+
+                    termSUB(0); //redefine subs in terms Array
+
+                    Stat(eval(this.id.replace("Sub", "SUB"))[globalName] + "Added In Term " + i);
+                    totalGPA(); //re calc GPA 
+                    LanSelect();  //
 
                 }
                 else {
-                    //alert(eval(this.id.replace("Sub", "SUB")).Arname + " is already in Term " + i + "\n or maybe twice dataSet");
+                    alert("term " + i + " has " + allTerms[i - 1].length + " courses \n It is reached maximum courses Term: " + maxTermSubs);
                     if ((/Mobi/.test(navigator.userAgent))) {
                         this.style.left = THISx;
                         this.style.top = THISy;
@@ -898,277 +862,288 @@ function infoDesign() {
                 }
 
             }
+            else {
+                //alert(eval(this.id.replace("Sub", "SUB")).Arname + " is already in Term " + i + "\n or maybe twice dataSet");
+                if ((/Mobi/.test(navigator.userAgent))) {
+                    this.style.left = THISx;
+                    this.style.top = THISy;
+                    THISx = 0; THISy = 0;
 
-
-        }
-    }
-    // this func is to define & redefine subjects in every semster and put in public array allTerms have courses as objects 
-    //xShift inputs ... is to shift the subjects (which after the xShift postion) {+1,-1}
-    function termSUB(xShift) {
-
-        //starting with clear past array and redefine 
-        allTerms = new Array(NTerms);
-        for (var i = 0 ; i < NTerms ; i++) {
-            allTerms[i] = [];
-        }
-
-        // until here every subject object has define its semster 
-
-        // for (var i = 1 ; i <= maxNTerm ; i++) {
-        for (var s = 1 ; s <= maxNSub; s++) {
-            //state 1 .. add new term .. so shift the courses (which after the shfit postion) to next semster .. adding start after term 0
-            if (state == 1 && eval("SUB" + s).sem > xShift && xShift != 0)
-                eval("SUB" + s).sem = Number(eval("SUB" + s).sem) + 1;
-                //state -1 .. remove term ... so shift the course(which after the shfit postion) to last semster ... remove start from term > 1 .. not delete term 1 
-            else if (state == -1 && eval("SUB" + s).sem > xShift && xShift > 1)
-                eval("SUB" + s).sem = Number(eval("SUB" + s).sem) - 1;
-
-
-
-            // console.log(allTerms[i-1]);
-            if ((allTerms[i - 1].indexOf(eval("SUB" + s)) == -1)) {//if it added to term data set 
-                if (allTerms[i - 1].length <= maxTermSubs) { //if this term has space  
-
-                    var i = parseInt(eval("SUB" + s).sem);//subject new term
-                    // console.log(allTerms[i-1].length);
-                    allTerms[i - 1].push(eval("SUB" + s));//add to the public term courses array 
-                    PushItems(("Sub" + s), i);  //push id and sem (graphically)
-
-                }
-                else { alert("Init.: term " + i + " has " + allTerms[i - 1].length + " courses \n is reached maxTermSubs: " + maxTermSubs); }
+                } return 0;
             }
 
-            else { alert("Init.:" + eval("SUB" + s)[globalName] + " is already in Term " + i); }
-
-        }
-        //console.log(allTerms.length);
-        state = 0; //redefault state as nothing 
-        // totalGPA(); 
-        // }
-    }
-    //..............................................
-
-
-    /////////// GUI / showing / drawing / ==style-editing 
-    function outFocus() {//this is called when click outside info-zone 
-        location.href = "#Base";
-        //infocanvas is the canvas contain the info-zone details 
-        infoCanvas.style.visibility = 'hidden';
-        infoCanvas.style.opacity = 0;
-        //back is black canvas to make focus on infozone 
-        document.getElementById('Back').style.visibility = 'hidden';
-        document.getElementById('Back').style.opacity = 0;
-    }
-    //this func to reDefault buttons       
-    function cleanShow() {
-        for (var i = 1; i <= Buttons.length ; i++) {
-            Buttons[i - 1].style.backgroundColor = butt_default_background;
-            Buttons[i - 1].style.color = butt_default_font_color;
-            Buttons[i - 1].style.borderColor = butt_default_border_color;
-            Buttons[i - 1].style.opacity = 1;
         }
 
-        //document.getElementById('BOTTOM').innerHTML = "Statues :"
+
     }
-    //this function to show roots & children of courses 
-    function showRoot() {
-        //show this subject as red 
-        //cleanShow();
-        for (var i = 1; i <= Buttons.length ; i++) {
-            Buttons[i - 1].style.backgroundColor = butt_default_background;
-            Buttons[i - 1].style.color = butt_default_font_color;
-            Buttons[i - 1].style.borderColor = butt_default_border_color;
-            Buttons[i - 1].style.opacity = 1;
+}
+// this func is to define & redefine subjects in every semster and put in public array allTerms have courses as objects 
+//xShift inputs ... is to shift the subjects (which after the xShift postion) {+1,-1}
+function termSUB(xShift) {
+
+    //starting with clear past array and redefine 
+    allTerms = new Array(NTerms);
+    for (var i = 0 ; i < NTerms ; i++) {
+        allTerms[i] = [];
+    }
+
+    // until here every subject object has define its semster 
+
+    // for (var i = 1 ; i <= maxNTerm ; i++) {
+    for (var s = 1 ; s <= maxNSub; s++) {
+        //state 1 .. add new term .. so shift the courses (which after the shfit postion) to next semster .. adding start after term 0
+        if (state == 1 && eval("SUB" + s).sem > xShift && xShift != 0)
+            eval("SUB" + s).sem = Number(eval("SUB" + s).sem) + 1;
+            //state -1 .. remove term ... so shift the course(which after the shfit postion) to last semster ... remove start from term > 1 .. not delete term 1 
+        else if (state == -1 && eval("SUB" + s).sem > xShift && xShift > 1)
+            eval("SUB" + s).sem = Number(eval("SUB" + s).sem) - 1;
+
+
+
+        // console.log(allTerms[i-1]);
+        if ((allTerms[i - 1].indexOf(eval("SUB" + s)) == -1)) {//if it added to term data set 
+            if (allTerms[i - 1].length <= maxTermSubs) { //if this term has space  
+
+                var i = parseInt(eval("SUB" + s).sem);//subject new term
+                // console.log(allTerms[i-1].length);
+                allTerms[i - 1].push(eval("SUB" + s));//add to the public term courses array 
+                PushItems(("Sub" + s), i);  //push id and sem (graphically)
+
+            }
+            else { alert("Init.: term " + i + " has " + allTerms[i - 1].length + " courses \n is reached maxTermSubs: " + maxTermSubs); }
         }
 
-        document.getElementById('TermPopUp').style.visibility = 'hidden'; //hide the inbetween areas while move_on button 
-        //button choose styple 
-        this.style.backgroundColor = butt_choosen_background;
-        this.style.color = butt_choosen_font_color;
-        this.style.borderColor = butt_choosen_border_color;
-        this.style.opacity = 1;
+        else { alert("Init.:" + eval("SUB" + s)[globalName] + " is already in Term " + i); }
 
-        //var idString = this.id;
-        //idString = idString.replace("Sub",""); //slice(3, 5); 
-        //console.log(idString);
-        //idString = "SUB" + idString;
-        //convert from button Sub to Object SUB
+    }
+    //console.log(allTerms.length);
+    state = 0; //redefault state as nothing 
+    // totalGPA(); 
+    // }
+}
+//..............................................
 
-        // root of subj
-        var xRoot =  eval(this.id.replace("Sub", "SUB")).root;
-        // console.log(xRoot);
-        for (var i = 0 ; i < xRoot.length; i++) {//convert form object SUB to bt Sub 
-            if (xRoot[i] > 0 && xRoot[i] <= maxNSub) {
-                document.getElementById("Sub" + xRoot[i]).style.backgroundColor = butt_root_background;
-                document.getElementById("Sub" + xRoot[i]).style.color = butt_root_font_color;
-                document.getElementById("Sub" + xRoot[i]).style.opacity = 1;
-                //roots of root
-                var xxRoot = eval("SUB" + xRoot[i]).root;
-                for (var j = 0 ; j < xxRoot.length ; j++) {
-                    if (xxRoot[j] > 0 && xxRoot[j] <= maxNSub) {
-                        if (xxRoot[j] == xRoot[i])
-                            document.getElementById("Sub" + xxRoot[j]).style.backgroundColor = butt_root_background;
-                            //if the course is root and root of root .. show it as root
-                        else {
-                            document.getElementById("Sub" + xxRoot[j]).style.backgroundColor = butt_root_of_root_background;
-                            document.getElementById("Sub" + xxRoot[j]).style.color = butt_root_of_root_font_color;
-                            document.getElementById("Sub" + xxRoot[j]).style.opacity = 1;
+
+/////////// GUI / showing / drawing / ==style-editing 
+function outFocus() {//this is called when click outside info-zone 
+    location.href = "#Base";
+    //infocanvas is the canvas contain the info-zone details 
+    infoCanvas.style.visibility = 'hidden';
+    infoCanvas.style.opacity = 0;
+    //back is black canvas to make focus on infozone 
+    document.getElementById('Back').style.visibility = 'hidden';
+    document.getElementById('Back').style.opacity = 0;
+}
+//this func to reDefault buttons       
+function cleanShow() {
+    for (var i = 1; i <= Buttons.length ; i++) {
+        Buttons[i - 1].style.backgroundColor = butt_default_background;
+        Buttons[i - 1].style.color = butt_default_font_color;
+        Buttons[i - 1].style.borderColor = butt_default_border_color;
+        Buttons[i - 1].style.opacity = 1;
+    }
+
+    //document.getElementById('BOTTOM').innerHTML = "Statues :"
+}
+//this function to show roots & children of courses 
+function showRoot() {
+    //show this subject as red 
+    //cleanShow();
+    for (var i = 1; i <= Buttons.length ; i++) {
+        Buttons[i - 1].style.backgroundColor = butt_default_background;
+        Buttons[i - 1].style.color = butt_default_font_color;
+        Buttons[i - 1].style.borderColor = butt_default_border_color;
+        Buttons[i - 1].style.opacity = 1;
+    }
+
+    document.getElementById('TermPopUp').style.visibility = 'hidden'; //hide the inbetween areas while move_on button 
+    //button choose styple 
+    this.style.backgroundColor = butt_choosen_background;
+    this.style.color = butt_choosen_font_color;
+    this.style.borderColor = butt_choosen_border_color;
+    this.style.opacity = 1;
+
+    //var idString = this.id;
+    //idString = idString.replace("Sub",""); //slice(3, 5); 
+    //console.log(idString);
+    //idString = "SUB" + idString;
+    //convert from button Sub to Object SUB
+
+    // root of subj
+    var xRoot =  eval(this.id.replace("Sub", "SUB")).root;
+    // console.log(xRoot);
+    for (var i = 0 ; i < xRoot.length; i++) {//convert form object SUB to bt Sub 
+        if (xRoot[i] > 0 && xRoot[i] <= maxNSub) {
+            document.getElementById("Sub" + xRoot[i]).style.backgroundColor = butt_root_background;
+            document.getElementById("Sub" + xRoot[i]).style.color = butt_root_font_color;
+            document.getElementById("Sub" + xRoot[i]).style.opacity = 1;
+            //roots of root
+            var xxRoot = eval("SUB" + xRoot[i]).root;
+            for (var j = 0 ; j < xxRoot.length ; j++) {
+                if (xxRoot[j] > 0 && xxRoot[j] <= maxNSub) {
+                    if (xxRoot[j] == xRoot[i])
+                        document.getElementById("Sub" + xxRoot[j]).style.backgroundColor = butt_root_background;
+                        //if the course is root and root of root .. show it as root
+                    else {
+                        document.getElementById("Sub" + xxRoot[j]).style.backgroundColor = butt_root_of_root_background;
+                        document.getElementById("Sub" + xxRoot[j]).style.color = butt_root_of_root_font_color;
+                        document.getElementById("Sub" + xxRoot[j]).style.opacity = 1;
+                    }
+                }
+            }
+
+        }
+    }
+    //show POST .. children 
+    for (var s = 0 ; s < allSUBs.length ; s++) {
+        var Sroot = eval("SUB" + (s + 1)).root;
+        for (var iSroot = 0 ; iSroot < Sroot.length ; iSroot++) {
+            if (Sroot[iSroot] == this.id.replace('Sub', '')) {
+
+
+                for (var xs = 0 ; xs < allSUBs.length ; xs++) {
+                    var xSroot = eval("SUB" + (xs + 1)).root;
+                    for (var xiSroot = 0 ; xiSroot < xSroot.length ; xiSroot++) {
+                        if (xSroot[xiSroot] == (s + 1)) {
+                            //post of posted 
+                            document.getElementById("Sub" + (xs + 1)).style.backgroundColor = butt_child_of_child_background;
+                            document.getElementById("Sub" + (xs + 1)).style.color = butt_child_of_child_font_color;
+                            document.getElementById("Sub" + (xs + 1)).style.opacity = 1;
                         }
                     }
                 }
-
+                document.getElementById("Sub" + (s + 1)).style.backgroundColor = butt_child_background;
+                document.getElementById("Sub" + (s + 1)).style.color = butt_child_font_color;
+                document.getElementById("Sub" + (s + 1)).style.opacity = 1;
             }
-        }
-        //show POST .. children 
-        for (var s = 0 ; s < allSUBs.length ; s++) {
-            var Sroot = eval("SUB" + (s + 1)).root;
-            for (var iSroot = 0 ; iSroot < Sroot.length ; iSroot++) {
-                if (Sroot[iSroot] == this.id.replace('Sub', '')) {
-
-
-                    for (var xs = 0 ; xs < allSUBs.length ; xs++) {
-                        var xSroot = eval("SUB" + (xs + 1)).root;
-                        for (var xiSroot = 0 ; xiSroot < xSroot.length ; xiSroot++) {
-                            if (xSroot[xiSroot] == (s + 1)) {
-                                //post of posted 
-                                document.getElementById("Sub" + (xs + 1)).style.backgroundColor = butt_child_of_child_background;
-                                document.getElementById("Sub" + (xs + 1)).style.color = butt_child_of_child_font_color;
-                                document.getElementById("Sub" + (xs + 1)).style.opacity = 1;
-                            }
-                        }
-                    }
-                    document.getElementById("Sub" + (s + 1)).style.backgroundColor = butt_child_background;
-                    document.getElementById("Sub" + (s + 1)).style.color = butt_child_font_color;
-                    document.getElementById("Sub" + (s + 1)).style.opacity = 1;
-                }
-            }
-        }
-        
-        //one click show root and addevent to wait click but for show info 
-        //another click show info and addevent to wait for click but for show root 
-        if ((/Mobi/.test(navigator.userAgent))) {
-            //if it clicked again show its info 
-            this.removeEventListener('click', showRoot);
-            this.addEventListener('click', showInfo);
         }
     }
-    //this function isto show names of courses + Underline Finishe courses  
-    function showNames() {
-        // work is done on buttons 
-        //by refering to their objects attributes 
-        //lan is global var ... changed by function LanSelect 
-        if (lan == 'en') { globalName = "fullname"; } else if (lan == 'ar') { globalName = "Arname"; }
-        for (var i = 1 ; i <= maxNSub; i++) {//edit button HTML  
-            if (eval("SUB" + i).degree >= LowPassDegree && eval("SUB" + i).degree <= HighestDegree) {
-                document.getElementById("Sub" + i).innerHTML = "<b> <u>" + eval("SUB" + i)[globalName] + "</u> </b>";
-            }
-            else
-                document.getElementById("Sub" + i).innerHTML = eval("SUB" + i)[globalName];
-        }
+    
+    //one click show root and addevent to wait click but for show info 
+    //another click show info and addevent to wait for click but for show root 
+    if ((/Mobi/.test(navigator.userAgent))) {
+        //if it clicked again show its info 
+        this.removeEventListener('click', showRoot);
+        this.addEventListener('click', showInfo);
     }
-    //draw subject (buttons) from entered subjects only at allSubs data set 
-    function coreDraw() {
-
-        var s = 0; //current num of sub
-        while (allSUBs.length > 0) {
-            allSUBs.pop();
+}
+//this function isto show names of courses + Underline Finishe courses  
+function showNames() {
+    // work is done on buttons 
+    //by refering to their objects attributes 
+    //lan is global var ... changed by function LanSelect 
+    if (lan == 'en') { globalName = "fullname"; } else if (lan == 'ar') { globalName = "Arname"; }
+    for (var i = 1 ; i <= maxNSub; i++) {//edit button HTML  
+        if (eval("SUB" + i).degree >= LowPassDegree && eval("SUB" + i).degree <= HighestDegree) {
+            document.getElementById("Sub" + i).innerHTML = "<b> <u>" + eval("SUB" + i)[globalName] + "</u> </b>";
         }
-        for (var i = 1; i <= numofuploadSubs; i++) {
-
-            try {
-                allSUBs.push(eval("SUB" + i));
-                s++; //sum true subjects
-            }
-            catch (error) {
-                //console.log("error");
-                //num of error subs 
-            }
-
-        }
-        maxNSub = s;
-        //console.log(maxNSub);
-        s = 0;
-        //Lefts = 50;
-        // xLefts , xTops is local changable variables of lefts and tops  
-        var xLefts = Lefts;
-        for (var i = 1 ; i <= NTerms  ; i++) {
-            var xTops = Tops;
-            for (j = 1 ; j <= intiNumSubsPerTerm ; j++) {
-
-                if (s >= maxNSub) return 0; //limit of gui
-
-                document.getElementById('Base').innerHTML += "<button id='w' draggable=true style='cursor:pointer;border:5px solid;border-radius:23px;border-color:white;width:" + Widths + "px;height:" + Heights + "px;position:absolute;left:" + xLefts + "px;top:" + xTops + "px;background-color:whitesmoke;font-size:" + btnfontSize + "px;'>" + "Sub_" + (j + (i - 1) * 6) + "</button>";
-
-                //ReDefine Ids from 'w' to 1,2,3,.....,maxNSub
-                document.getElementById('Base').getElementsByTagName('button')[j + (i - 1) * 6 - 1].id = "Sub" + (j + (i - 1) * 6);
-
-                //Init. Position 
-                // document.getElementById('Sub' + (j + (i - 1) * 6)).style.top = Tops + "px" ;
-                // document.getElementById('Sub' + (j + (i - 1) * 6)).style.left = Lefts + "px";
-                xTops += SubShiftTop; //absolute value from the refrence >> the innerHTML 
-                s++;
-
-            }
-            xLefts += TermShiftLeft;
-        }
+        else
+            document.getElementById("Sub" + i).innerHTML = eval("SUB" + i)[globalName];
     }
-    //draw terms (Divs) as (n) times 
-    function termDraw(n) {
-        if (n == null) n = 10;
-        else if (n < minNTerms) { n = minNTerms; }
-        else if (n > maxNTerms) { n = maxNTerms; } // also controled by the input funtion 
+}
+//draw subject (buttons) from entered subjects only at allSubs data set 
+function coreDraw() {
 
-        NTerms = n;
-        iLvl = 0;
+    var s = 0; //current num of sub
+    while (allSUBs.length > 0) {
+        allSUBs.pop();
+    }
+    for (var i = 1; i <= numofuploadSubs; i++) {
 
-        var TermLefts = baseTermLefts;
-        //term draw 
-        for (var iTerm = 1 ; iTerm <= NTerms ; iTerm++) {
-            //draw term area
-            document.getElementById('Base').innerHTML += "<div id='Sem1' class='H' onselectstart='return false;' style='border:5px solid;border-radius:23px;border-color:white;height:" + TermHeights + "px; width:" + TermWidths + "px; background-color:darkcyan; position:absolute; left: " + TermLefts + "px; top: " + TermTops + "px; text-align-last:center;color:white;font-size:27px;'> <u> <b>" + " Level " + iLvl + "00" + " Term " + iTerm + "</b></u> </div>";
-            //draw semster-GPA area 
-            document.getElementById('Base').innerHTML += "<div id='infoSem1' class='I' onselectstart='return false;' style='border:5px solid;border-radius:20px;border-color:white;height:" + 60 + "px; width:" + (TermWidths - Hoffset / 2) + "px; background-color:black;opacity:0.95; position:absolute; left: " + TermLefts + "px; top: " + (TermTops + TermHeights + 20) + "px; text-align:center;color:cyan;font-size:27px;'></div>";
+        try {
+            allSUBs.push(eval("SUB" + i));
+            s++; //sum true subjects
+        }
+        catch (error) {
+            //console.log("error");
+            //num of error subs 
+        }
 
-            if (iTerm % 2 == 0) iLvl++;
-            {
-                document.getElementById('Base').getElementsByClassName("H")[iTerm - 1].id = "Sem" + iTerm;
-                document.getElementById('Base').getElementsByClassName("I")[iTerm - 1].id = "infoSem" + iTerm;
-            }
-            document.getElementById('Base').style.height = TermHeights + Voffset + 133 + "px";
-            document.getElementById('Base').style.width = TermLefts + TermWidths + +Hoffset + "px";
-            // document.getElementById('BOTTOM').style.width = TermLefts + TermWidths + Hoffset + "px";
-            // document.getElementById('HEADER').style.width = TermLefts + TermWidths + Hoffset + "px";
-            document.getElementById('GPA').style.width = TermLefts + TermWidths + Hoffset + 10 + "px";
-            document.getElementById('HEADER').style.width = TermLefts + TermWidths + Hoffset + "px";
-            document.getElementById('copyright').style.width = (TermLefts + TermWidths + Hoffset) * 0.66 + "px";
-            document.getElementById('copyright').style.left = (TermLefts + TermWidths + +Hoffset) / 2 - parseInt(document.getElementById('copyright').style.width) / 2 + 'px';
-            document.getElementById('copyright').style.top = parseInt(document.getElementById('Base').style.height) + parseInt(document.getElementById('Base').style.top) + parseInt(document.getElementById('infoHelp').style.height) + 50 + "px";
+    }
+    maxNSub = s;
+    //console.log(maxNSub);
+    s = 0;
+    //Lefts = 50;
+    // xLefts , xTops is local changable variables of lefts and tops  
+    var xLefts = Lefts;
+    for (var i = 1 ; i <= NTerms  ; i++) {
+        var xTops = Tops;
+        for (j = 1 ; j <= intiNumSubsPerTerm ; j++) {
 
+            if (s >= maxNSub) return 0; //limit of gui
 
-            TermLefts += TermShiftLeft;
+            document.getElementById('Base').innerHTML += "<button id='w' draggable='true' style='cursor:pointer;border:5px solid;border-radius:23px;border-color:white;width:" + Widths + "px;height:" + Heights + "px;position:absolute;left:" + xLefts + "px;top:" + xTops + "px;background-color:whitesmoke;font-size:" + btnfontSize + "px;'>" + "Sub_" + (j + (i - 1) * 6) + "</button>";
+
+            //ReDefine Ids from 'w' to 1,2,3,.....,maxNSub
+            document.getElementById('Base').getElementsByTagName('button')[j + (i - 1) * 6 - 1].id = "Sub" + (j + (i - 1) * 6);
+
+            //Init. Position 
+            // document.getElementById('Sub' + (j + (i - 1) * 6)).style.top = Tops + "px" ;
+            // document.getElementById('Sub' + (j + (i - 1) * 6)).style.left = Lefts + "px";
+            xTops += SubShiftTop; //absolute value from the refrence >> the innerHTML 
+            s++;
 
         }
+        xLefts += TermShiftLeft;
     }
-    // what is going on now ? state bar show operations underwork ..... [DEVELOPING..]
-    function Stat(x) {
-        //  document.getElementById('BOTTOM').innerHTML = "Status :" + x + "."; 
-        // var _0x866c = ["\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C", "\x42\x4F\x54\x54\x4F\x4D", "\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64", "\x53\x74\x61\x74\x75\x73\x20\x3A", "\x2E"]; document[_0x866c[2]](_0x866c[1])[_0x866c[0]] = _0x866c[3] + x + _0x866c[4]
-    }
-    //..............................................
+}
+//draw terms (Divs) as (n) times 
+function termDraw(n) {
+    if (n == null) n = 10;
+    else if (n < minNTerms) { n = minNTerms; }
+    else if (n > maxNTerms) { n = maxNTerms; } // also controled by the input funtion 
 
-    //saveing function  ///////////////////////////
-    /*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
-    var saveAs = saveAs || function (e) {
-        "use strict";
-        if (typeof e === "undefined" || typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
-            return
+    NTerms = n;
+    iLvl = 0;
+
+    var TermLefts = baseTermLefts;
+    //term draw 
+    for (var iTerm = 1 ; iTerm <= NTerms ; iTerm++) {
+        //draw term area
+        document.getElementById('Base').innerHTML += "<div id='Sem1' class='H' onselectstart='return false;' style='border:5px solid;border-radius:23px;border-color:white;height:" + TermHeights + "px; width:" + TermWidths + "px; background-color:darkcyan; position:absolute; left: " + TermLefts + "px; top: " + TermTops + "px; text-align-last:center;color:white;font-size:27px;'> <u> <b>" + " Level " + iLvl + "00" + " Term " + iTerm + "</b></u> </div>";
+        //draw semster-GPA area 
+        document.getElementById('Base').innerHTML += "<div id='infoSem1' class='I' onselectstart='return false;' style='border:5px solid;border-radius:20px;border-color:white;height:" + 60 + "px; width:" + (TermWidths - Hoffset / 2) + "px; background-color:black;opacity:0.95; position:absolute; left: " + TermLefts + "px; top: " + (TermTops + TermHeights + 20) + "px; text-align:center;color:cyan;font-size:27px;'></div>";
+
+        if (iTerm % 2 == 0) iLvl++;
+        {
+            document.getElementById('Base').getElementsByClassName("H")[iTerm - 1].id = "Sem" + iTerm;
+            document.getElementById('Base').getElementsByClassName("I")[iTerm - 1].id = "infoSem" + iTerm;
         }
-        var t = e.document, n = function () {
-            return e.URL || e.webkitURL || e
-        }, r = t.createElementNS("http://www.w3.org/1999/xhtml", "a"), o = "download" in r, a = function (e) { var t = new MouseEvent("click"); e.dispatchEvent(t) }, i = /constructor/i.test(e.HTMLElement) || e.safari, f = /CriOS\/[\d]+/.test(navigator.userAgent), u = function (t) { (e.setImmediate || e.setTimeout)(function () { throw t }, 0) }, s = "application/octet-stream", d = 1e3 * 40, c = function (e) { var t = function () { if (typeof e === "string") { n().revokeObjectURL(e) } else { e.remove() } }; setTimeout(t, d) }, l = function (e, t, n) { t = [].concat(t); var r = t.length; while (r--) { var o = e["on" + t[r]]; if (typeof o === "function") { try { o.call(e, n || e) } catch (a) { u(a) } } } }, p = function (e) { if (/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(e.type)) { return new Blob([String.fromCharCode(65279), e], { type: e.type }) } return e }, v = function (t, u, d) {
-            if (!d) { t = p(t) }
-            var v = this, w = t.type, m = w === s, y, h = function () { l(v, "writestart progress write writeend".split(" ")) }, S = function () { if ((f || m && i) && e.FileReader) { var r = new FileReader; r.onloadend = function () { var t = f ? r.result : r.result.replace(/^data:[^;]*;/, "data:attachment/file;"); var n = e.open(t, "_blank"); if (!n) e.location.href = t; t = undefined; v.readyState = v.DONE; h() }; r.readAsDataURL(t); v.readyState = v.INIT; return } if (!y) { y = n().createObjectURL(t) } if (m) { e.location.href = y } else { var o = e.open(y, "_blank"); if (!o) { e.location.href = y } } v.readyState = v.DONE; h(); c(y) }; v.readyState = v.INIT; if (o) { y = n().createObjectURL(t); setTimeout(function () { r.href = y; r.download = u; a(r); h(); c(y); v.readyState = v.DONE }); return } S()
-        }, w = v.prototype, m = function (e, t, n) { return new v(e, t || e.name || "download", n) }; if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) { return function (e, t, n) { t = t || e.name || "download"; if (!n) { e = p(e) } return navigator.msSaveOrOpenBlob(e, t) } } w.abort = function () { }; w.readyState = w.INIT = 0; w.WRITING = 1; w.DONE = 2; w.error = w.onwritestart = w.onprogress = w.onwrite = w.onabort = w.onerror = w.onwriteend = null; return m}(typeof self !== "undefined" && self || typeof window !== "undefined" && window || this.content); if (typeof module !== "undefined" && module.exports) { module.exports.saveAs = saveAs } else if (typeof define !== "undefined" && define !== null && define.amd !== null) { define("FileSaver.js", function () { return saveAs }) }
+        document.getElementById('Base').style.height = TermHeights + Voffset + 133 + "px";
+        document.getElementById('Base').style.width = TermLefts + TermWidths + +Hoffset + "px";
+        // document.getElementById('BOTTOM').style.width = TermLefts + TermWidths + Hoffset + "px";
+        // document.getElementById('HEADER').style.width = TermLefts + TermWidths + Hoffset + "px";
+        document.getElementById('GPA').style.width = TermLefts + TermWidths + Hoffset + 10 + "px";
+        document.getElementById('HEADER').style.width = TermLefts + TermWidths + Hoffset + "px";
+        document.getElementById('copyright').style.width = (TermLefts + TermWidths + Hoffset) * 0.66 + "px";
+        document.getElementById('copyright').style.left = (TermLefts + TermWidths + +Hoffset) / 2 - parseInt(document.getElementById('copyright').style.width) / 2 + 'px';
+        document.getElementById('copyright').style.top = parseInt(document.getElementById('Base').style.height) + parseInt(document.getElementById('Base').style.top) + parseInt(document.getElementById('infoHelp').style.height) + 50 + "px";
+
+
+        TermLefts += TermShiftLeft;
+
+    }
+}
+// what is going on now ? state bar show operations underwork ..... [DEVELOPING..]
+function Stat(x) {
+    //  document.getElementById('BOTTOM').innerHTML = "Status :" + x + "."; 
+    // var _0x866c = ["\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C", "\x42\x4F\x54\x54\x4F\x4D", "\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64", "\x53\x74\x61\x74\x75\x73\x20\x3A", "\x2E"]; document[_0x866c[2]](_0x866c[1])[_0x866c[0]] = _0x866c[3] + x + _0x866c[4]
+}
+//..............................................
+
+//saveing function  ///////////////////////////
+/*! @source http://purl.eligrey.com/github/FileSaver.js/blob/master/FileSaver.js */
+var saveAs = saveAs || function (e) {
+    "use strict";
+    if (typeof e === "undefined" || typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
+        return
+    }
+    var t = e.document, n = function () {
+        return e.URL || e.webkitURL || e
+    }, r = t.createElementNS("http://www.w3.org/1999/xhtml", "a"), o = "download" in r, a = function (e) { var t = new MouseEvent("click"); e.dispatchEvent(t) }, i = /constructor/i.test(e.HTMLElement) || e.safari, f = /CriOS\/[\d]+/.test(navigator.userAgent), u = function (t) { (e.setImmediate || e.setTimeout)(function () { throw t }, 0) }, s = "application/octet-stream", d = 1e3 * 40, c = function (e) { var t = function () { if (typeof e === "string") { n().revokeObjectURL(e) } else { e.remove() } }; setTimeout(t, d) }, l = function (e, t, n) { t = [].concat(t); var r = t.length; while (r--) { var o = e["on" + t[r]]; if (typeof o === "function") { try { o.call(e, n || e) } catch (a) { u(a) } } } }, p = function (e) { if (/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(e.type)) { return new Blob([String.fromCharCode(65279), e], { type: e.type }) } return e }, v = function (t, u, d) {
+        if (!d) { t = p(t) }
+        var v = this, w = t.type, m = w === s, y, h = function () { l(v, "writestart progress write writeend".split(" ")) }, S = function () { if ((f || m && i) && e.FileReader) { var r = new FileReader; r.onloadend = function () { var t = f ? r.result : r.result.replace(/^data:[^;]*;/, "data:attachment/file;"); var n = e.open(t, "_blank"); if (!n) e.location.href = t; t = undefined; v.readyState = v.DONE; h() }; r.readAsDataURL(t); v.readyState = v.INIT; return } if (!y) { y = n().createObjectURL(t) } if (m) { e.location.href = y } else { var o = e.open(y, "_blank"); if (!o) { e.location.href = y } } v.readyState = v.DONE; h(); c(y) }; v.readyState = v.INIT; if (o) { y = n().createObjectURL(t); setTimeout(function () { r.href = y; r.download = u; a(r); h(); c(y); v.readyState = v.DONE }); return } S()
+    }, w = v.prototype, m = function (e, t, n) { return new v(e, t || e.name || "download", n) }; if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) { return function (e, t, n) { t = t || e.name || "download"; if (!n) { e = p(e) } return navigator.msSaveOrOpenBlob(e, t) } } w.abort = function () { }; w.readyState = w.INIT = 0; w.WRITING = 1; w.DONE = 2; w.error = w.onwritestart = w.onprogress = w.onwrite = w.onabort = w.onerror = w.onwriteend = null; return m}(typeof self !== "undefined" && self || typeof window !== "undefined" && window || this.content); if (typeof module !== "undefined" && module.exports) { module.exports.saveAs = saveAs } else if (typeof define !== "undefined" && define !== null && define.amd !== null) { define("FileSaver.js", function () { return saveAs }) }
 
 /*
 [DEVELOPING]
@@ -1180,5 +1155,5 @@ function infoDesign() {
 - Reviews about courses 
 - complete avaiablity on smart phones site/or app 
 - STARTING MARKET WITH .. WHY YOU NEED THIS ?
-
+- GET courses details from CSV file for any no. ['DONE 22OCT18']
 */
