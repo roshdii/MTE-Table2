@@ -1,7 +1,7 @@
 // JavaScript source code
 
 $.ajax({
-   url:"courses_dataSet.csv",
+   url:"https://raw.githubusercontent.com/roshdii/MTE-Table2/master/courses_dataSet.csv",
    dataType:"text",
    async: false,
    success:function(data)
