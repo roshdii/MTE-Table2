@@ -95,3 +95,4 @@ var THISx, THISy; // global postion when touch events is calling
 var globalName = "fullname"; // properties of SUb english name // Arname attribute of sub arabic name // 
 
 var RESULT; //the input file data 
+var fadingspeed = 0.01 ; //less is faster  
