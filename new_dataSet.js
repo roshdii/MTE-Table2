@@ -35,7 +35,7 @@ class SUBX {
         this.Lectures= '';
       }
     }
-console.log(courses_data.length);
+//console.log(courses_data.length);
 var count = 0 ; 
 
 for(var c = 1; c<courses_data.length; c++)
@@ -50,6 +50,7 @@ for(var c = 1; c<courses_data.length; c++)
       //alter details with comming csv file 
       eval("SUB"+count).name= cell_data[0].toString();
       var croot = [([cell_data[1]][0]).split('-')][0].map(Number) ; 
+      if (croot[0] == 0) croot = [] ; //make a null array is better in size and the core code
       // console.log(cc);
       eval("SUB"+count).root= croot ; // to make a vector again
       // console.log(eval("SUB"+count).root);
