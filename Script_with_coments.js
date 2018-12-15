@@ -635,7 +635,7 @@ function showInfo() {
     document.getElementById('infoscore').innerHTML = infoScore; 
     document.getElementById('infoDrss').innerHTML = "";
     
-    console.log("infog lec"+infoSubject+" : "+infoLecturers.length);
+    //console.log("infog lec"+infoSubject+" : "+infoLecturers.length);
 
     for (var d = 0 ; d < infoLecturers.length ;d++)
          document.getElementById('infoDrss').innerHTML += "<option>" + infoLecturers[d] ;
