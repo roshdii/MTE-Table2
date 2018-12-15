@@ -15,9 +15,8 @@ var maxNSub = 0, //max base subjects per semster .. =0 .. so theres no subs inti
 
 var intiNumSubsPerTerm = 6;  //intial fill courses per term
 
-var numofuploadSubs = 0 ; //= courses_data.length -1 ;  //the first line not counted 
 var courses_data ; //contains all data from uploaded CSV file 
-var maxINPUTTemrs = 0 ; 
+var maxINPUTTemrs = 0 ; //counted = max semster no. / of the input dataset 
 
 //style of buttons 
 var butt_default_background = "white",
@@ -96,3 +95,4 @@ var globalName = "fullname"; // properties of SUb english name // Arname attribu
 
 var RESULT; //the input file data 
 var fadingspeed = 0.01 ; //less is faster  
+var new_coreDraw = true ; //new way of core draw by surfing sem.value for each sub
