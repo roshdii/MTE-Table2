@@ -33,7 +33,7 @@ function BASE(){
     document.getElementById('input').style.visibility = 'visible';
     document.getElementById('lang').style.visibility = 'visible';
 
-    console.log("num of max Terms = " + maxINPUTTemrs);
+    //console.log("num of max Terms = " + maxINPUTTemrs);
 
     termDraw(maxINPUTTemrs); //have the default N semister 
     coreDraw();    //have the base N subjects element 
@@ -607,7 +607,7 @@ function showInfo() {
     openedSubject = eval(this.id.replace("Sub", "")); //get num 
     infoDesc = eval(this.id.replace("Sub", "SUB")).description;
     infoHours = eval(this.id.replace("Sub", "SUB")).hours;
-    infoSubject = eval(this.id.replace("Sub", "SUB")).fullname;
+    infoSubject = eval(this.id.replace("Sub", "SUB")).name ;  //fullname;
     infoLecturers = eval(this.id.replace("Sub", "SUB")).drs;
     infoTopics = eval(this.id.replace("Sub", "SUB")).topics;
     infoType = eval(this.id.replace("Sub", "SUB")).type;
@@ -634,6 +634,8 @@ function showInfo() {
     document.getElementById('infoType').innerHTML = infoType;
     document.getElementById('infoscore').innerHTML = infoScore; 
     document.getElementById('infoDrss').innerHTML = "";
+    
+    console.log("infog lec"+infoSubject+" : "+infoLecturers.length);
 
     for (var d = 0 ; d < infoLecturers.length ;d++)
          document.getElementById('infoDrss').innerHTML += "<option>" + infoLecturers[d] ;
@@ -707,7 +709,7 @@ function PushItems(subjectid, term) {
     var btnid;
     if (term > 0 && term <= NTerms) {
         try {
-
+            //console.log("sub_id ="+subjectid+" term="+term);
 
             btnid = subjectid; //came with "Sub"
             document.getElementById(btnid).style.left = parseInt(document.getElementById("Sem" + term).style.left) + Hoffset + "px";
@@ -1038,7 +1040,10 @@ function showNames() {
             document.getElementById("Sub" + i).innerHTML = "<b> <u>" + eval("SUB" + i)[globalName] + "</u> </b>";
         }
         else
+            try {
             document.getElementById("Sub" + i).innerHTML = eval("SUB" + i)[globalName];
+            }
+            catch (error) {console.log("Sub"+i);}
     }
 }
 //draw subject (buttons) from entered subjects only at allSubs data set 
@@ -1055,13 +1060,14 @@ function coreDraw() {
             s++; //sum true subjects
         }
         catch (error) {
-            //console.log("error");
+            console.log("error");
             //num of error subs 
         }
 
     }
     maxNSub = s;
     //console.log(maxNSub);
+    if(!new_coreDraw){
     s = 0;
     //Lefts = 50;
     // xLefts , xTops is local changable variables of lefts and tops  
@@ -1069,24 +1075,43 @@ function coreDraw() {
     for (var i = 1 ; i <= NTerms  ; i++) {
         var xTops = Tops;
         for (j = 1 ; j <= intiNumSubsPerTerm ; j++) {
+        //for (j = 1 ; j <= maxNSub ; j++) {if (eval("SUB"+j).sem == i ) {
 
+            
+            //console.log("iTerm="+ i + " jSub="+ j + " sCounted="+s );
             if (s >= maxNSub) return 0; //limit of gui
 
             document.getElementById('Base').innerHTML += "<button id='w' draggable='true' style='cursor:pointer;border:5px solid;border-radius:23px;border-color:white;width:" + Widths + "px;height:" + Heights + "px;position:absolute;left:" + xLefts + "px;top:" + xTops + "px;background-color:whitesmoke;font-size:" + btnfontSize + "px;'>" + "Sub_" + (j + (i - 1) * 6) + "</button>";
 
             //ReDefine Ids from 'w' to 1,2,3,.....,maxNSub
-            document.getElementById('Base').getElementsByTagName('button')[j + (i - 1) * 6 - 1].id = "Sub" + (j + (i - 1) * 6);
+            
+            document.getElementById('Base').getElementsByTagName('button')[j + (i - 1) * intiNumSubsPerTerm - 1].id = "Sub" + (j + (i - 1) * intiNumSubsPerTerm);
+            //document.getElementById('Base').getElementsByTagName('button')[s].id = "Sub" + (j + (i - 1) * intiNumSubsPerTerm);
 
             //Init. Position 
             // document.getElementById('Sub' + (j + (i - 1) * 6)).style.top = Tops + "px" ;
             // document.getElementById('Sub' + (j + (i - 1) * 6)).style.left = Lefts + "px";
             xTops += SubShiftTop; //absolute value from the refrence >> the innerHTML 
             s++;
-
+        //}
         }
         xLefts += TermShiftLeft;
     }
 }
+    if(new_coreDraw){
+    no_sub = new Array(NTerms).fill(0); 
+    //console.log(no_sub);
+        for (j = 1 ; j <= maxNSub ; j++) {
+            var no_term = eval("SUB"+j).sem ; 
+            no_sub[no_term-1] = no_sub[no_term-1]+1;  
+            //console.log("iTerm="+ no_term + " jSub="+ j + " no_sub[no_term-1]="+no_sub[no_term-1] );
+            var xTops = Tops+SubShiftTop*no_sub[no_term-1]; //absolute value from the refrence >> the innerHTML 
+            var xLefts = Lefts+TermShiftLeft*no_term;
+            document.getElementById('Base').innerHTML += "<button id='Sub" + j +"' draggable='true' style='cursor:pointer;border:5px solid;border-radius:23px;border-color:white;width:" + Widths + "px;height:" + Heights + "px;position:absolute;left:" + xLefts + "px;top:" + xTops + "px;background-color:whitesmoke;font-size:" + btnfontSize + "px;'>" + "Sub_" + (j) + "</button>";
+      }
+    }
+}
+
 //draw terms (Divs) as (n) times 
 function termDraw(n) {
     if (n == null) n = 10;
